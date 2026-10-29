@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chat organizer</title>
+  <link rel="stylesheet" href="organizer.css">
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>Chat organizer</h1>
+      <p class="sub"><span id="org-name">Connecting to claude.ai…</span><span id="mock-badge" class="badge warn" hidden>Mock data</span></p>
+    </div>
+    <div class="top-actions">
+      <button id="btn-export" type="button">Export backup</button>
+      <button id="btn-restore" type="button">Restore last backup</button>
+      <button id="btn-undo" type="button">Undo last batch</button>
+    </div>
+  </header>
+
+  <div id="banner" class="banner" hidden></div>
+  <div id="confirm" class="confirm" hidden>
+    <span id="confirm-text"></span>
+    <span class="spacer"></span>
+    <button id="confirm-cancel" type="button">Cancel</button>
+    <button id="confirm-ok" type="button" class="primary">Continue</button>
+  </div>
+
+  <section class="counts" aria-label="Chat counts">
+    <div class="count"><div class="label">Active chats</div><div class="value" id="n-total">–</div></div>
+    <div class="count warn"><div class="label">Unfiled</div><div class="value" id="n-unfiled">–</div></div>
+    <div class="count"><div class="label">In a group</div><div class="value" id="n-group">–</div></div>
+    <div class="count"><div class="label">In a project</div><div class="value" id="n-project">–</div></div>
+  </section>
+
+  <section class="filters" aria-label="Filters">
+    <input id="f-search" type="search" placeholder="Search chats" aria-label="Search chats">
+    <div class="seg" role="group" aria-label="Show">
+      <button type="button" class="chip on" data-show="all">All</button>
+      <button type="button" class="chip" data-show="unfiled">Unfiled <span id="chip-unfiled" class="chip-n"></span></button>
+      <button type="button" class="chip" data-show="undated">Not renamed <span id="chip-undated" class="chip-n"></span></button>
+      <button type="button" class="chip" data-show="stale">Stale <span id="chip-stale" class="chip-n"></span></button>
+    </div>
+    <select id="f-group" aria-label="Filter by group"></select>
+    <select id="f-project" aria-label="Filter by project"></select>
+    <span class="spacer"></span>
+    <button id="btn-stale" type="button">Update stale names</button>
+    <button id="btn-refresh" type="button" class="primary">Refresh names</button>
+  </section>
+
+  <div id="status" class="status" aria-live="polite"></div>
+
+  <section id="bulk" class="bulk" hidden aria-label="Bulk actions">
+    <span id="bulk-n">0 selected</span>
+    <span class="spacer"></span>
+    <button id="btn-rename-selected" type="button">Rename selected</button>
+    <select id="b-group" aria-label="Move to group"></select>
+    <select id="b-project" aria-label="Move to project"></select>
+    <button id="btn-clear" type="button" class="ghost">Clear</button>
+  </section>
+
+  <section id="preview" class="preview" hidden aria-label="Rename preview">
+    <div class="preview-head">
+      <h2>Rename preview</h2>
+      <span id="preview-summary" class="muted"></span>
+      <span class="spacer"></span>
+      <button id="btn-preview-close" type="button" class="ghost">Close</button>
+      <button id="btn-apply" type="button" class="primary">Apply renames</button>
+    </div>
+    <p class="muted small">claude.ai may show renamed chats as used today. The real dates are in the names.</p>
+    <p id="preview-skips" class="muted small"></p>
+    <div id="preview-list" class="preview-list"></div>
+  </section>
+
+  <table class="chats">
+    <colgroup><col class="c-check"><col><col class="c-group"><col class="c-project"><col class="c-date"><col class="c-date"></colgroup>
+    <thead>
+      <tr>
+        <th><input id="sel-all" type="checkbox" aria-label="Select all shown"></th>
+        <th>Chat</th><th>Group</th><th>Project</th><th>Started</th><th>Last used</th>
+      </tr>
+    </thead>
+    <tbody id="rows"><tr><td colspan="6" class="muted">Loading…</td></tr></tbody>
+  </table>
+
+  <div id="ctx" class="ctx" role="menu" hidden></div>
+
+  <footer class="foot">
+    <label><input id="opt-reminder" type="checkbox"> Remind me to close the Claude desktop app before filing into groups</label>
+    <span class="muted small">Right-click a chat to file it. Uses claude.ai's unofficial internal API, which may change. MIT License · Not affiliated with Anthropic.</span>
+  </footer>
+
+  <script type="module" src="organizer.js"></script>
+</body>
+</html>

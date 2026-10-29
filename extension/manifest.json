@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Claude Chat Organizer",
+  "version": "0.1.0",
+  "description": "See every claude.ai chat's group, project and dates, file chats in bulk, and date-stamp chat names.",
+  "action": {
+    "default_title": "Open chat organizer"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": ["storage", "scripting", "tabs"],
+  "host_permissions": ["https://claude.ai/*"]
+}
